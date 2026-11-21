@@ -30,3 +30,10 @@ try {
   console.error(`VIDEO.json could not be copied from ${BOT_DIR}: ${(err as Error).message}`);
   process.exit(1);
 }
+
+// Verify the copy: the file the gate reads must parse and name the same video.
+const copied = JSON.parse(readFileSync(join(OUTPUT_DIR, 'VIDEO.json'), 'utf8'));
+if (copied.url !== parsed.url) {
+  console.error('VIDEO.json copy does not match the source');
+  process.exit(1);
+}
